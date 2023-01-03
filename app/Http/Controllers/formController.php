@@ -41,8 +41,8 @@ class formController extends Controller
         public function deletePlayer(Request $request) {
             $input = $request->all();
             $id = $input['id'];
-            $Players = Players::where('id',$id)->delete();
-
+            Players::where('id',$id)->delete();
+            Games::where('player_id',$id)->delete();
             return back()->withInput();
 
         }

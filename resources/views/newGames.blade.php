@@ -2,18 +2,27 @@
 @extends('sections.head')
 
 @section('content')
-
+<script src="{{ asset('js/select2/main.js') }}"></script>
+<link href="{{ asset('js/select2/main.css') }}" rel="stylesheet">
 <?php
 $max=$count;
 
 for ($i=1; $i<=$max; $i++) {
-?>
+   ?>
+   <script>
+   $(document).ready(function() { $("#select<?php echo $i; ?>").select2(); });
+   
+ </script>
+
 <style>
 .overtime<?php echo $i; ?>{
 display: none;
 }
 .nam<?php echo $i; ?>{
 display: none;
+margin-top: -28px;
+ z-index: 99;
+ position: relative;
 }
 
 .fam<?php echo $i; ?>{
@@ -26,8 +35,9 @@ display: none;
 <?php
 }
 ?>
+
 <script type="text/javascript">
-   jQuery(document).ready(function( ) {
+   jQuery(document).ready(function() {
 
 <?php
 
@@ -42,7 +52,7 @@ $('.CheckPlayer<?php echo $i; ?>, .playernew<?php $i; ?>').click(function() {
 $('.nam<?php echo $i; ?>').toggleClass('show');
 $('.fam<?php echo $i; ?>').toggleClass('show');
 $('.city<?php echo $i; ?>').toggleClass('show');
-$('.select<?php echo $i; ?>').toggleClass('hide');
+// $('.select<?php echo $i; ?>').toggleClass('hide');
 
 
 });
@@ -53,7 +63,6 @@ $('.select<?php echo $i; ?>').toggleClass('hide');
    ?>
 });
 </script>
-
 <label style='text-align: center;
    font-size: 25px;
 '>Добавление игр в турнир</label>
@@ -98,7 +107,7 @@ echo	'Игра #'.$i;
    
        <label class="form-check-label playernew<?php echo $i; ?>" for="CheckPlayer<?php echo $i; ?>">
    Новый игрок (игрока нет в базе)
- </label>
+ </label><br>
 
 
    <select required class="form-control select<?php echo $i ?>" name='select<?php echo $i; ?>' id="select<?php echo $i ?>">

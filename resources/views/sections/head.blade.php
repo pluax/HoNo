@@ -55,7 +55,7 @@
               <a class="nav-link" href="/players">Игроки</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="info">Аккаунт</a>
+              <a class="nav-link" href="/info">Аккаунт</a>
               </li>
               <li class="nav-item">
               <form method="POST" action="{{ route('logout') }}">

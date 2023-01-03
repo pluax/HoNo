@@ -33,5 +33,10 @@
                 {{ $slot }}
             </main>
         </div>
+        <footer>
+            Полезные ссылки: <br>
+            Scorpion : <a target="_blank" href='https://th.sportscorpion.com/rus/tournament/'>https://th.sportscorpion.com/rus/tournament/ </a><br>
+            Федерация: <a target="_blank" href='http://www.board-hockey.ru/'>http://www.board-hockey.ru</a>
+        </footer>
     </body>
 </html>
