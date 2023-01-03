@@ -4,7 +4,7 @@
 
  <h1>Турнир: <a target=_blank href='{{ $tour->link }}'>{{ $tour->name_tour }} ({{ $tour->city_tour }})</a></h1>
 <h3>{{ $wins }}-{{ $tie }}-{{ $lose }} ({{ $goalFor }}-{{ $goalAway }})</h3> 
-<table class="table table-bordered menu">
+<table class="table table-bordered menu table-striped">
  <thead>
     <tr>
       <th scope="col">№</th>

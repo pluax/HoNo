@@ -53,7 +53,7 @@ $html = $htmlAll;
 </table>
   <form action='/insert/parser' method=post>
      @csrf
- <table class="table table-bordered menu">
+ <table class="table table-bordered menu table-striped">
  <tr>
       <th scope="col">№</th>
       <th scope="col">Новый</th>

@@ -20,7 +20,7 @@
     Количество добавляемых игр:
     <input class="form-control" name=count>
 </div>
-    <table class="table table-bordered menu" style='margin-top: 20px;'>
+    <table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
   <thead>
     <tr>
       <th scope="col">#</th>

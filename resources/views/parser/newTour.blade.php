@@ -8,7 +8,7 @@
 <label style='text-align: center;
    font-size: 25px;
 '>Добавление игр в турнир</label>
-<table class="table table-bordered menu">
+<table class="table table-bordered menu table-striped">
  <thead>
    <tr>
      <th scope="col">Название турнира</th>

@@ -13,7 +13,7 @@
 </div>
 
 </form>
- <table class="table table-bordered menu" style='margin-top: 10px;
+ <table class="table table-bordered menu table-striped" style='margin-top: 10px;
 '>
   <thead>
     <tr>

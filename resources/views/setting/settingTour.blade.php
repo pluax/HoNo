@@ -2,7 +2,7 @@
 
 @section('content')
 <h1>Редактирование турниров</h1>
-    <table class="table table-bordered menu" style='margin-top: 20px;'>
+    <table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
   <thead>
     <tr>
     	<th scope="col">#</th>
