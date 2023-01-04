@@ -81,7 +81,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     $endName1 = strpos($html2,'ma_name2">Отдых</td>');
     $lenEndGame = mb_strlen('ma_name2">Отдых</td>');
    
-    if  (($endName >  $endName1) and ($endName1<>0)) { 
+    if  ((($endName >  $endName1) and ($endName1<>0)) or ($endName==0)) { 
         //отсеивание "Отдыха"
       
       
@@ -121,7 +121,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     $score = substr($html,0 , $endScore);
     $scoreArray = explode(' : ',$score);
     //  конец парсинга счёта
-    
+
     if ($scoreArray[1]<$scoreArray[0])  $scoreBackground = 'background:#d0f0c0;'; 
     if ($scoreArray[0]<$scoreArray[1]) $scoreBackground = 'background:#ff9090;';
     if ($scoreArray[1]==$scoreArray[0]) $scoreBackground = 'background:white;';
