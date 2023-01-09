@@ -29,9 +29,9 @@ class pagesController extends Controller
       
       $players = DB::select("select `player_id`, `family_player`, `name_player`, `city`, 
        count(player_id) as 'count', (select count(`id`) from `games` 
-       where (`result`=2 and `player_id`= `players`.`id` )) AS 'w',(select count(`id`) 
-       from `games` where (`result`='1' and `player_id`= `players`.`id` )) as 't',
-       (select count(`id`) from `games` where (`result`='0' and `player_id`= `players`.`id` ))
+       where (`result`=2 and `player_id`= `players`.`id` and `user_id`=".$userId." )) AS 'w',(select count(`id`) 
+       from `games` where (`result`='1' and `player_id`= `players`.`id` and `user_id`=".$userId." )) as 't',
+       (select count(`id`) from `games` where (`result`='0' and `player_id`= `players`.`id` and `user_id`=".$userId." ))
         as 'l', sum(`goal_for`) as 'gf', sum(`goal_away`) as 'ga',sum(`goal_for`)-sum(`goal_away`)
         as 'pm' from `games` left join `players` on (`player_id` = `players`.`id`) left join `tours`
         on (`tour_id`=`tours`.`id`) where (((`family_player` like '%".$find."%') or (`name_player` like '%".$find."%') or (`city` like '%".$find."%')) and (`user_id`=".$userId.")) group by `games`.`player_id`, `players`.`family_player`, `players`.`city`, `players`.`name_player`, `players`.`id`
