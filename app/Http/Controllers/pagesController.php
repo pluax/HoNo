@@ -54,7 +54,12 @@ class pagesController extends Controller
 
       $goalFor = Games::where([['player_id',$id],['user_id',$idPlayer]])->get()->sum('goal_for');
       $goalAway = Games::where([['player_id',$id],['user_id',$idPlayer]])->get()->sum('goal_away');
-
+      foreach ($games as $game){
+          if ($game->type=='r')  
+           $game->background = 'background:#fff;'; 
+          else 
+           $game->background = 'background:#dcdcdc;';
+      }
 
       return view('stats.player', compact('games','player','wins','tie','lose','goalFor','goalAway'));
      }
@@ -135,6 +140,12 @@ class pagesController extends Controller
       $goalAway = Games::where([['tour_id',$id],['user_id',$userId]])->get()->sum('goal_away');
 
       $tour= Tours::where('id',$id)->first();
+      foreach ($games as $game){
+        if ($game->type=='r')  
+         $game->backgroundType = 'background:#fff;'; 
+        else 
+         $game->backgroundType = 'background:#dcdcdc;';
+      } 
       return view('stats.oneTour', compact('games','tour','wins','tie','lose','goalFor','goalAway'));
     }
     public function editOneTour(Request $request){

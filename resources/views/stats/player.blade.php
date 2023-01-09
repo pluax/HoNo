@@ -43,7 +43,7 @@
 
 </td>
 
-<td>
+<td style='{{ $game->background }}'>
 <?php
  switch ($game->type) {
         case 'r':

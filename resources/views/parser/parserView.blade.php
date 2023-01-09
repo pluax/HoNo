@@ -8,19 +8,21 @@ use Illuminate\Http\Request;
 use App\Models\Players;
 use Illuminate\Support\Facades\Auth;
 
-
+//ПЕРЕПИСАТЬ!! если будет время логику - в контроллер
 $userId = Auth::id();  //яя
 
 
-          // $family='Фатеев';
-          // $name='Дмитрий';
+
         $player = $name.' '.$family;
 
 
   //  $html = file_get_contents('https://th.sportscorpion.com/rus/tournament/stage/15798/table/'); 
 //   $url = $link;
 //   $htmlAll = file_get_contents($url);
-  $htmlAll = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCode);?>
+  $htmlAll = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCode);
+  $htmlAll = str_replace(array('<span class="ranks-circle" style="background-color:#0000FF;border:1px solid #0000FF;" title="Ветераны"></span>', '<span class="ranks-circle" style="background-color:#78777D;border:1px solid #78777D;" title="Суперветераны"></span>', '<span class="ranks-circle" style="background-color:#4BD667;border:1px solid #4BD667;" title="U13"></span>', '<span class="ranks-circle" style="background-color:#12941B;border:1px solid #12941B;" title="Юниоры"></span>', '<span class="ranks-circle" style="background-color:#FF91D3;border:1px solid #FF91D3;" title="Женщины"></span>'), '', $htmlAll);
+  $htmlAll = str_replace(array('<span class="ranks-badge"></span>'), '', $htmlAll);
+ ?>
         
       <?php
 $html = $htmlAll;
@@ -81,6 +83,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     $endName1 = strpos($html2,'ma_name2">Отдых</td>');
     $lenEndGame = mb_strlen('ma_name2">Отдых</td>');
    
+    
     if  ((($endName >  $endName1) and ($endName1<>0)) or ($endName==0)) { 
         //отсеивание "Отдыха"
       

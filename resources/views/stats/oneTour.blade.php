@@ -23,7 +23,7 @@
     <td style='{{ $game->background }}'>
      {{ $game->goal_for }} : {{ $game->goal_away }}
     </td>
-    <td>
+    <td style='{{ $game->backgroundType }}'>
      {{ $game->typeText }}
     </td>
     <td>
