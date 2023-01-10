@@ -43,7 +43,7 @@ class pagesController extends Controller
     public function playerOne($id, Request $request){
       $idPlayer = Auth::id();
       $games =  Games::where([['player_id',$id],['user_id',$idPlayer]])
-      ->leftJoin('tours', 'games.tour_id', '=', 'tours.id')->orderByDesc('tours.date')
+      ->leftJoin('tours', 'games.tour_id', '=', 'tours.id')->orderByDesc('tours.date')->orderByDesc('games.id')
       ->get();
 
       $player = Players::where('id', $id)->first();
