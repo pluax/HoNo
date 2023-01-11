@@ -2,6 +2,15 @@
 
 @section('content')
 <h1>Редактирование турниров</h1>
+<form style='display:flex;' method='post' action='/edit'>
+@csrf
+ <div class=col-md-10>
+<input name=find class=form-control value='{{ isset($find) ? $find : "" }}'>
+</div>
+<div class=col-md-2>
+<input type=submit value='Поиск' class="btn btn-primary">
+</div>
+</form>
     <table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
   <thead>
     <tr>
@@ -20,7 +29,7 @@
   	@foreach ($tours as $tour)
 <tr>
  <td scope="row">
- <?php $i++; echo $i; ?> 
+ {{ ($loop->count)-($loop->index) }}
 </td>
 <td>
 <a href='/tour/{{ $tour->id }}'>	{{ $tour->name_tour }} </a>

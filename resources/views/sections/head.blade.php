@@ -36,23 +36,29 @@
           </div>
         </div>
         <div class='container'>
-            <div class='row'>
+            <div class='row'>              
                 <div class='col-md-2 main_menu'>
+                 Статистика:    
                 <ul class="navbar-nav">
               <li class="nav-item">
-              <a class="nav-link" href="/">Игры</a>
+              <a class="nav-link" href="/">Все игры</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="/tours">Турниры</a>
               </li>
+              <hr>
+              Настройки:
               <li class="nav-item">
-              <a class="nav-link" href="/insert/tour">Добавление</a>
+              <a class="nav-link" href="/insert/onetour">Добавить новый турнир</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="/edit">Настройки</a>
+              <a class="nav-link" href="/insert/select/tour">Добавить игры в существующий турнир</a>
               </li>
               <li class="nav-item">
-              <a class="nav-link" href="/players">Игроки</a>
+              <a class="nav-link" href="/edit">Редактирование игр и турниров </a>
+              </li>
+              <li class="nav-item">
+              <a class="nav-link" href="/players">Настройки игроков</a>
               </li>
               <li class="nav-item">
               <a class="nav-link" href="/info">Аккаунт</a>

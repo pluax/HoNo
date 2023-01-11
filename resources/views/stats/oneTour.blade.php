@@ -21,7 +21,7 @@
      {{ $loop->iteration}}
     </td>
     <td style='{{ $game->background }}'>
-     {{ $game->goal_for }} : {{ $game->goal_away }}
+     {{ $game->goal_for }} : {{ $game->goal_away }} {{ $game->ot }}
     </td>
     <td style='{{ $game->backgroundType }}'>
      {{ $game->typeText }}

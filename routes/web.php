@@ -28,6 +28,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/tour/{id}', [pagesController::class, 'oneTour']);
 
     Route::get('/edit', [pagesController::class, 'editTours']);
+    Route::post('/edit', [pagesController::class, 'editTours']);
     Route::get('/edit/games/{id}', [pagesController::class, 'editGamesTour']);
     Route::get('/insert/tour',  function () { return view('insertTour'); });
 

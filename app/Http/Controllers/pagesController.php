@@ -95,13 +95,12 @@ class pagesController extends Controller
     }
 
 
-    public function editTours(){
+    public function editTours(Request $request){
       $userId = Auth::id();
-
-
-      $tours = Tours::where('tour_user_id', $userId)->orderByDesc('date')->get();
-
-      return view('setting.settingTour', compact('tours'));
+      $input = $request->all();
+      $find = isset($input['find']) ? $input['find'] : '';
+      $tours = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->orderByDesc('date')->get();
+      return view('setting.settingTour', compact('tours','find'));
     }
 
     public function toursEditGames(Request $request){
@@ -141,6 +140,9 @@ class pagesController extends Controller
 
       $tour= Tours::where('id',$id)->first();
       foreach ($games as $game){
+
+        if ($game->type=='o') $game->ot = '(OT)'; else $game->ot = '';
+
         if ($game->type=='r')  
          $game->backgroundType = 'background:#fff;'; 
         else 

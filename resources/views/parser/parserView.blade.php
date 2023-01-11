@@ -61,6 +61,7 @@ $html = $htmlAll;
       <th scope="col">Новый</th>
       <th scope="col">Имя</th>
       <th scope="col">Фамилия</th>
+      <th scope="col">Город</th>
       <th scope="col">Счёт</th>
       <th scope="col">Добавить?</th>
 
@@ -125,6 +126,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     $scoreArray = explode(' : ',$score);
     //  конец парсинга счёта
 
+
     if ($scoreArray[1]<$scoreArray[0])  $scoreBackground = 'background:#d0f0c0;'; 
     if ($scoreArray[0]<$scoreArray[1]) $scoreBackground = 'background:#ff9090;';
     if ($scoreArray[1]==$scoreArray[0]) $scoreBackground = 'background:white;';
@@ -133,11 +135,29 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
       if ($id == null) {
         $playerBackground = 'background:#ff9090';
         $checked = ' checked';
+        //парсинг Города
+        $linkCitystart = strpos($html,'/rus/user/id/');
+        $linkCityLen = mb_strlen('/rus/user/id/');
+        $linkCityEnd = strpos($html,'" title="">');
+   
+        $htmlForLink = substr($html, $linkCitystart+$linkCityLen);
+        $linkCity = stristr($htmlForLink, '/', true);
+        $htmlCity = file_get_contents('https://th.sportscorpion.com/rus/user/id/'.$linkCity);
+        $htmlCity = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCity);
+
+        $htmlCityStart = strpos($htmlCity,'<th>Город</th>');
+        $htmlCityLen = mb_strlen('<th>Город</th>');
+        $htmlCity = substr($htmlCity, $htmlCityStart+$htmlCityLen+9);
+
+        $city = stristr($htmlCity, '</td>', true);
+
+//парсинг Города
       }
       else {
         $playerBackground = 'background:#d0f0c0;';
         $idPlayer = $id->id;
         $checked = '';
+        $city = $id->city;
       }
     ?>
   <tr>
@@ -145,8 +165,10 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     <td><input class="form-check-input" <?php echo $checked; ?> type=checkbox name=CheckPlayer<?php echo  $i; ?> value=yes> 
   <input class=form-control name=idPlayer<?php echo  $i; ?> hidden value=<?php if (isset($idPlayer)) echo $idPlayer; ?> > </td>
    <td><input class=form-control name=name<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $nameArray[0];  ?>"> </td>
-   <td><input class=form-control name=fam<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $nameArray[1];  ?>">
-   <input class=form-control name=city<?php echo $i; ?> value="-" hidden> </td>
+   <td><input class=form-control name=fam<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $nameArray[1];  ?>"> 
+   </td>
+   <td><input class=form-control name=city<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $city; ?>">
+   </td>
    <td style='display:flex;'><input class=form-control name=user_score<?php echo $i; ?> style='width: 50px; <?php echo $scoreBackground; ?>' value="<?php echo $scoreArray[0];  ?>">:
    <input class=form-control name=player_score<?php echo $i; ?> style='width: 50px; <?php echo $scoreBackground; ?>' value="<?php echo $scoreArray[1];  ?>">
   
@@ -164,11 +186,17 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     
     //имя
    $start = strpos($htmlLeft,'title="">'.$player.'</a></td><td class="ma_result_b"' );
-   $start = $start-180;
+
+ 
+   $start = $start-450;
 
    $htmlLeft = substr($htmlLeft, $start);
 
+
    
+
+     
+
    $start = strpos($htmlLeft, 'title="">');
    $start = $start + mb_strlen('title="">');
 
@@ -177,6 +205,8 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
    $end = strpos($htmlLeft,'</a></td>');
    $name = substr($htmlLeft, 0, $end);
     
+
+
    $nameArray = explode(' ',$name);
 
 
@@ -201,17 +231,36 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
      if ($scoreArray[0]>$scoreArray[1]) $scoreBackground = 'background:#ff9090;';
      if ($scoreArray[1]==$scoreArray[0]) $scoreBackground = 'background:white;';
 
-
      $id=Players::where('name_player', $nameArray[0])->where('family_player', $nameArray[1])->where('plaer_from_id',$userId)->first();
-      if ($id == null) {
-        $playerBackground = 'background:#ff9090';
-        $checked = 'checked';
-      }
-      else {
-        $playerBackground = 'background:#d0f0c0;';
-        $idPlayer = $id->id;
-        $checked = '';
-      }
+     if ($id == null) {
+       $playerBackground = 'background:#ff9090';
+       $checked = 'checked';
+        //парсинг Города
+        $linkCitystart = strpos($htmlLeft,'/rus/user/id/');
+        $linkCityLen = mb_strlen('/rus/user/id/');
+        $linkCityEnd = strpos($htmlLeft,'" title="">');
+       
+        $htmlForLink = substr($htmlLeft, $linkCitystart+$linkCityLen);
+        $linkCity = stristr($htmlForLink, '/', true);
+        $htmlCity = file_get_contents('https://th.sportscorpion.com/rus/user/id/'.$linkCity);
+        $htmlCity = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCity);
+  
+        $htmlCityStart = strpos($htmlCity,'<th>Город</th>');
+        $htmlCityLen = mb_strlen('<th>Город</th>');
+        $htmlCity = substr($htmlCity, $htmlCityStart+$htmlCityLen+9);
+  
+        $city = stristr($htmlCity, '</td>', true);
+       //Парсинг Города
+     }
+     else {
+       $playerBackground = 'background:#d0f0c0;';
+       $idPlayer = $id->id;
+       $checked = '';
+       $city = $id->city;
+  
+     }
+  
+    
   //   ?>
   <tr>
     <td><?php echo $i; ?></td>
@@ -219,7 +268,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
   <input class="form-control"  name=idPlayer<?php echo  $i; ?> hidden value=<?php if (isset($idPlayer)) echo $idPlayer; ?> >   </td>
   <td> <input class="form-control"  name=name<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $nameArray[0];  ?>"></td>
   <td> <input class="form-control" name=fam<?php echo $i; ?> style='<?php echo $playerBackground; ?>' value="<?php echo $nameArray[1];  ?>">
-      <input class="form-control"  name=city<?php echo $i; ?> value="-" hidden>
+     <td> <input class=form-control name=city<?php echo $i; ?> style='<?php echo $playerBackground; ?>'  value='<?php echo $city; ?>'></td>
 </td>
     <td style='display:flex;'> <input class="form-control" name=user_score<?php echo $i; ?> style='width: 50px; <?php echo $scoreBackground; ?>' value="<?php echo $scoreArray[1];  ?>">:
     <input class="form-control"  name=player_score<?php echo $i; ?> style='width: 50px; <?php echo $scoreBackground; ?>'  value="<?php  echo $scoreArray[0];  ?>"></td>

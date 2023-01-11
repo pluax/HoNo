@@ -11,8 +11,12 @@
 </div>
 <div class=col-md-2>
 <input type=submit value='Поиск' class="btn btn-primary">
+<a href="/insert/onetour">
+<div title='Добавить турнир' style='float: right;
+    margin-top: 5px;' class=plus>
 </div>
-
+</a>
+</div>
 </form>
     <table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
   <thead>
