@@ -118,14 +118,18 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
     // старт парсинга счёта
     $startScore = strpos($html, 'title="Завершён">');
     $startScore = $startScore + mb_strlen('title="Завершён">');
+    
+    
+    $htmlForParsCity = substr($html,$startScore-150);
 
     $html = substr($html,$startScore+8);  //??? откуда 8?? возможно разобраться
-
+    
     $endScore = strpos($html,'</td><td');
     $score = substr($html,0 , $endScore);
     $scoreArray = explode(' : ',$score);
     //  конец парсинга счёта
 
+    
 
     if ($scoreArray[1]<$scoreArray[0])  $scoreBackground = 'background:#d0f0c0;'; 
     if ($scoreArray[0]<$scoreArray[1]) $scoreBackground = 'background:#ff9090;';
@@ -136,11 +140,11 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
         $playerBackground = 'background:#ff9090';
         $checked = ' checked';
         //парсинг Города
-        $linkCitystart = strpos($html,'/rus/user/id/');
-        $linkCityLen = mb_strlen('/rus/user/id/');
-        $linkCityEnd = strpos($html,'" title="">');
+        $linkCitystart = strpos($htmlForParsCity,'/user/id/');
+        $linkCityLen = mb_strlen('/user/id/');
+        $linkCityEnd = strpos($htmlForParsCity,'" title="">');
    
-        $htmlForLink = substr($html, $linkCitystart+$linkCityLen);
+        $htmlForLink = substr($htmlForParsCity, $linkCitystart+$linkCityLen);
         $linkCity = stristr($htmlForLink, '/', true);
         $htmlCity = file_get_contents('https://th.sportscorpion.com/rus/user/id/'.$linkCity);
         $htmlCity = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCity);
@@ -150,7 +154,7 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
         $htmlCity = substr($htmlCity, $htmlCityStart+$htmlCityLen+9);
 
         $city = stristr($htmlCity, '</td>', true);
-
+       
 //парсинг Города
       }
       else {
@@ -188,18 +192,17 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
    $start = strpos($htmlLeft,'title="">'.$player.'</a></td><td class="ma_result_b"' );
 
  
-   $start = $start-450;
-
-   $htmlLeft = substr($htmlLeft, $start);
-
+   $start = $start-(mb_strlen('<a href="/rus/user/id/8334/" title=""')*5);
 
    
+   $htmlLeft = substr($htmlLeft, $start);
 
-     
+   
 
    $start = strpos($htmlLeft, 'title="">');
    $start = $start + mb_strlen('title="">');
 
+   $htmlforParsCity = $htmlLeft;
    $htmlLeft = substr($htmlLeft, $start);
 
    $end = strpos($htmlLeft,'</a></td>');
@@ -213,6 +216,13 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
    $end = strpos($htmlLeft,'title="">'.$player.'</a></td>');
    $len = mb_strlen('title="">'.$player.'</a></td>');
    $end = $end + $len;
+
+
+
+
+
+
+   
    //имя
       $htmlLeft = substr($htmlLeft, $end);
     //echo '<textarea>'.$htmlLeft.'</textare>';
@@ -236,12 +246,13 @@ while (strpos($html, $player.'</a></td><td class="ma_name_sep">-')<>0) {
        $playerBackground = 'background:#ff9090';
        $checked = 'checked';
         //парсинг Города
-        $linkCitystart = strpos($htmlLeft,'/rus/user/id/');
+        $linkCitystart = strpos($htmlforParsCity,'/rus/user/id/');
         $linkCityLen = mb_strlen('/rus/user/id/');
-        $linkCityEnd = strpos($htmlLeft,'" title="">');
+        $linkCityEnd = strpos($htmlforParsCity,'" title="">');
        
-        $htmlForLink = substr($htmlLeft, $linkCitystart+$linkCityLen);
+        $htmlForLink = substr($htmlforParsCity, $linkCitystart+$linkCityLen);
         $linkCity = stristr($htmlForLink, '/', true);
+    
         $htmlCity = file_get_contents('https://th.sportscorpion.com/rus/user/id/'.$linkCity);
         $htmlCity = str_replace(array("\r\n", "\r", "\n", "\t", '  ', '    ', '    '), '', $htmlCity);
   
