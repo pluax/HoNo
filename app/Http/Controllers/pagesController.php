@@ -46,6 +46,11 @@ class pagesController extends Controller
       ->leftJoin('tours', 'games.tour_id', '=', 'tours.id')->orderByDesc('tours.date')->orderByDesc('games.id')
       ->get();
 
+      if ($games->count()==0) {
+        return back()->withInput();
+      } 
+      else 
+      {
       $player = Players::where('id', $id)->first();
 
       $wins = Games::where([['player_id',$id],['user_id',$idPlayer]])->where('result','2')->get()->count();
@@ -62,6 +67,7 @@ class pagesController extends Controller
       }
 
       return view('stats.player', compact('games','player','wins','tie','lose','goalFor','goalAway'));
+        }
      }
 
 
@@ -120,6 +126,12 @@ class pagesController extends Controller
       ->leftJoin('tours', 'games.tour_id', '=', 'tours.id')
       ->get();     
 
+      if ($games->count()==0) {
+        return back()->withInput();
+      } 
+      else 
+      {
+
       foreach ($games as $game) {
         if  ($game->result==2) $game->background = "background:#d0f0c0;";
         if  ($game->result==0) $game->background = "background:#ff9090;";
@@ -149,6 +161,7 @@ class pagesController extends Controller
          $game->backgroundType = 'background:#dcdcdc;';
       } 
       return view('stats.oneTour', compact('games','tour','wins','tie','lose','goalFor','goalAway'));
+     }
     }
     public function editOneTour(Request $request){
       $input = $request->all();

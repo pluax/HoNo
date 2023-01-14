@@ -215,9 +215,10 @@ class formController extends Controller
         }    
 
         public function deleteOneGame($tourId, Request $request){
+        $userId = Auth::id(); 
         $input = $request->all();
         $id = $input['id'];
-        Games::where('id',$id)->delete();
+        Games::where([['id',$id],['user_id',$userId]])->delete();
         return redirect('edit/games/'.$tourId);
         }
 
@@ -225,13 +226,13 @@ class formController extends Controller
         public function updateOneGame($tourId, Request $request){
             $input = $request->all();
             $id = $input['id'];
-
+            $userId = Auth::id(); 
             //запрос
             if ($input['gf']>$input['ga']) $result=2; 
             if ($input['gf']==$input['ga']) $result=1;
             if ($input['gf']<$input['ga']) $result=0; 
 
-            Games::where('id', $id)
+            Games::where([['id',$id],['user_id',$userId]])
             ->update([
                 'goal_for' => $input['gf'],
                 'goal_away' => $input['ga'],
