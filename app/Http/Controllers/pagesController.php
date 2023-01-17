@@ -65,8 +65,9 @@ class pagesController extends Controller
           else 
            $game->background = 'background:#dcdcdc;';
       }
-
-      return view('stats.player', compact('games','player','wins','tie','lose','goalFor','goalAway'));
+        $avgFor = round($goalFor/$games->count(), 2);
+        $avgAway = round($goalAway/$games->count(), 2);
+      return view('stats.player', compact('games','player','wins','tie','lose','goalFor','goalAway','avgFor','avgAway'));
         }
      }
 
@@ -160,7 +161,9 @@ class pagesController extends Controller
         else 
          $game->backgroundType = 'background:#dcdcdc;';
       } 
-      return view('stats.oneTour', compact('games','tour','wins','tie','lose','goalFor','goalAway'));
+      $avgFor = round($goalFor/$games->count(), 2);
+      $avgAway = round($goalAway/$games->count(), 2);
+      return view('stats.oneTour', compact('games','tour','wins','tie','lose','goalFor','goalAway','avgFor','avgAway'));
      }
     }
     public function editOneTour(Request $request){

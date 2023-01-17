@@ -2,8 +2,8 @@
 
 @section('content')
 
- <h1>Турнир: <a target=_blank href='{{ $tour->link }}'>{{ $tour->name_tour }} ({{ $tour->city_tour }})</a></h1>
-<h3>{{ $wins }}-{{ $tie }}-{{ $lose }} ({{ $goalFor }}-{{ $goalAway }})</h3> 
+ <h1>Турнир: <a target=_blank title='Дата: {{ $tour->date }}' href='{{ $tour->link }}'>{{ $tour->name_tour }} ({{ $tour->city_tour }} )</a></h1>
+<h3>{{ $wins }}-{{ $tie }}-{{ $lose }} (<span class=avg title='{{ $avgFor  }}'>{{ $goalFor }}</span>-<span class=avg title='{{ $avgAway  }}'>{{ $goalAway }}</span>)</h3> 
 <table class="table table-bordered menu table-striped">
  <thead>
     <tr>

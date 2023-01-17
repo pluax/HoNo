@@ -16,7 +16,7 @@
     </tr>
   </thead>
   <h3> История игр с <span style='font-weight:bold;'> {{ $player->family_player }} {{ $player->name_player }} ({{ $player->city }}) </span> </h3>
-  <h3> {{ $wins }}-{{ $tie }}-{{ $lose }} ({{ $goalFor }}-{{ $goalAway }}) </h3>
+  <h3> {{ $wins }}-{{ $tie }}-{{ $lose }} (<span class=avg title='{{ $avgFor  }}'>{{ $goalFor }}</span>-<span class=avg title='{{ $avgAway  }}'>{{ $goalAway }}</span>) </h3>
   <tbody>
   
   	@foreach ($games as $game)
