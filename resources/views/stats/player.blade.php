@@ -22,7 +22,7 @@
   	@foreach ($games as $game)
     <tr>
 <th scope="row">
-{{ ($loop->count)-($loop->index) }}
+{{ (($count+1)-(($games ->currentpage()-1) * $games ->perpage() + $loop->index + 1)) }}
 </th>
 
 <?php
@@ -85,6 +85,7 @@
         
   </tbody>
 </table>
+{{ $games->links() }}
 
 
 

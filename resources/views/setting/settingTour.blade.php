@@ -29,7 +29,7 @@
   	@foreach ($tours as $tour)
 <tr>
  <td scope="row">
- {{ ($loop->count)-($loop->index) }}
+ {{ ($count+1)-(($tours ->currentpage()-1) * $tours ->perpage() + $loop->index + 1) }}
 </td>
 <td>
 <a href='/tour/{{ $tour->id }}'>	{{ $tour->name_tour }} </a>
@@ -57,5 +57,5 @@
 </tr>
 @endforeach
 </table>
-
+{{ $tours->links() }}
 @endsection

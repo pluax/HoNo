@@ -28,7 +28,7 @@
   	@foreach ($players as $player)
 <tr>
  <td scope="row">
- {{ $player->id }}
+ {{ ($players ->currentpage()-1) * $players ->perpage() + $loop->index + 1 }}
 </td>
 <form method="post" action="update_player">
 @csrf
@@ -54,7 +54,7 @@
 </tr>
 @endforeach
 </table>
-{{ $players->links('vendor.pagination.simple-bootstrap-4') }}
+{{ $players->links() }}
 
 
 

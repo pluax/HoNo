@@ -219,3 +219,9 @@ table{
 .avg{
     cursor: pointer;
 }
+.page-link{
+    color:black;
+}
+.pagination{
+    margin-top: 1rem;
+}

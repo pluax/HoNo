@@ -13,6 +13,7 @@
 </div>
 
 </form>
+
  <table class="table table-bordered menu table-striped" style='margin-top: 10px;
 '>
   <thead>
@@ -30,10 +31,13 @@
     </tr>
   </thead>
   <tbody>
+ 
+
+
   @foreach ($players as $player)
     <tr>
     
-      <th scope="row"> {{ $loop->iteration  }} </th>
+      <th scope="row"> {{ ($players ->currentpage()-1) * $players ->perpage() + $loop->index + 1 }} </th>
       <td>
         <a href="/player/{{ $player->player_id }}">
    {{ $player->family_player }}    {{ $player->name_player }}
@@ -80,4 +84,5 @@
     @endforeach
   </tbody>
 </table>
+{{ $players->links() }}
  @endsection

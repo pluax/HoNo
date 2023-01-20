@@ -14,11 +14,10 @@
 
 </form>
 <br>
-<form method='post' action='/insert/add/game'>
-@csrf
+
 <div style='display:flex;'>
     Количество добавляемых игр:
-    <input class="form-control" name=count>
+   
 </div>
     <table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
   <thead>
@@ -32,12 +31,17 @@
     </tr>
   </thead>
   <tbody>
-  	@foreach ($tours as $tour)
+
+  	@foreach ($tours as $tour) 
+     <form method='post' action='/insert/add/game'>
 <tr>
  <td scope="row">
- {{ ($loop->count)-($loop->index) }}
+ {{  (($count+1)-(($tours ->currentpage()-1) * $tours ->perpage() + $loop->index + 1)) }}
 </td>
-<td>
+<td style='display:flex;'>
+
+@csrf
+<input style='width:75px;' class="form-control" name=count type=number>
 <input title='Добавить игры' type=submit class="plus" value='{{  $tour->id }}' name=id>
 </td>
 
@@ -52,13 +56,15 @@
 	</td>
   <td>
 
-  <button name=tourIdParser type=submit value='{{ $tour->id }}'>Спарсить</button>
+  <button class='btn btn-secondary' name=tourIdParser type=submit value='{{ $tour->id }}'>Спарсить</button>
 
  </td>
 </tr>
-@endforeach
 </form>
+@endforeach
+
 </table>
+{{ $tours->links() }}
 </div>  
 @endsection
 
