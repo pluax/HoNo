@@ -52,6 +52,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('/update/user', [formController::class, 'updateUser']);
     Route::post('/parser', [parserController::class, 'parser']);
     Route::post('/insert/parser', [formController::class, 'parsGames']);
+    Route::post('/update/password', [formController::class, 'updatePassword']);
     });
     
 

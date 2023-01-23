@@ -9,11 +9,12 @@ use App\Models\Games;
 use App\Models\User;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rules;
 
 class formController extends Controller
 {
-    //public $userId = 1;//я
+    
 
     public function newPlayer(Request $request) {
         $userId = Auth::id();
@@ -300,9 +301,44 @@ class formController extends Controller
             ->update(['name' => $allName],
                       ['email' => $email]
                 );
-            return redirect('/info');
+
+                $nameFamily = explode(' ', $allName);
+                $name = $nameFamily[0];
+                $family = $nameFamily[1];
+                $massageUpdate = 'Данные успешно обновлены';
+                return view('setting.infoAboutUser', compact('massageUpdate','name','family'));
+            
           }
 
+
+          public function updatePassword(Request $request){
+            
+            $input = $request->all();
+            $userId = Auth::id(); 
+            $nameFamily = explode(' ',Auth::user()->name);
+            $name = $nameFamily[0];
+            $family = $nameFamily[1];
+            $oldPass = User::where('id',$userId)->first();
+            $oldPass = $oldPass->password;
+            if (Hash::check($input['oldPassword'], $oldPass)) {
+             
+                    if (strlen($input['newPassword']) <= 8) {
+                        $massage = 'Минимальная длина пароля - 8 символов';
+                        $classCSS = 'error';
+                    } else {
+
+                User::where('id', $userId)
+                   ->update(['password' => Hash::make($input['newPassword'])],
+                );
+                $massage = 'Пароль обновлён!';
+                $classCSS = 'success';
+                     }
+                  } else {
+                $massage = 'Пароль неверный! ';
+                $classCSS = 'error';
+                }
+            return view('setting.infoAboutUser', compact('massage','name','family', 'classCSS'));
+          }
 
 
     }
