@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Tours;
@@ -10,6 +10,7 @@ use App\Models\Players;
 use App\Models\Users;
 use Illuminate\Support\Facades\Auth;
 
+
 class pagesController extends Controller
 {
     public function tours(Request $request){
@@ -17,7 +18,10 @@ class pagesController extends Controller
         $input = $request->all();
         $find = isset($input['find']) ? $input['find'] : '';
         $count = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->orderByDesc('date')->count();
-        $tours = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->orderByDesc('date')->paginate(50); 
+        $tours = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->orderByDesc('date')->paginate(50);
+        foreach ($tours as $tour){
+          $tour->date = Carbon::parse($tour->date)->format('d.m.Y'); 
+        }
         return view('tours', compact('tours','find','count'));
 
     }
@@ -27,18 +31,6 @@ class pagesController extends Controller
       $input = $request->all();
       $find = isset($input['find']) ? $input['find'] : '';
       
-      // $players = DB::select("select `player_id`, `family_player`, `name_player`, `city`, 
-      //  count(player_id) as 'count', (select count(`id`) from `games` 
-      //  where (`result`=2 and `player_id`= `players`.`id` and `user_id`=".$userId." )) AS 'w',(select count(`id`) 
-      //  from `games` where (`result`='1' and `player_id`= `players`.`id` and `user_id`=".$userId." )) as 't',
-      //  (select count(`id`) from `games` where (`result`='0' and `player_id`= `players`.`id` and `user_id`=".$userId." ))
-      //   as 'l', sum(`goal_for`) as 'gf', sum(`goal_away`) as 'ga',sum(`goal_for`)-sum(`goal_away`)
-      //   as 'pm' from `games` left join `players` on (`player_id` = `players`.`id`) left join `tours`
-      //   on (`tour_id`=`tours`.`id`) where (((`family_player` like '%".$find."%') 
-      //   or (`name_player` like '%".$find."%') or (`city` like '%".$find."%')) and (`user_id`=".$userId.")) 
-      //   group by `games`.`player_id`, `players`.`family_player`, `players`.`city`, `players`.`name_player`, `players`.`id`
-      //   order by count(`player_id`) desc");
-
         $players = DB::table('players')
         ->select('family_player','name_player','games.player_id','city',
         DB::raw('sum(`goal_for`) as "gf", sum(`goal_away`) as "ga",sum(`goal_for`)-sum(`goal_away`) as "pm"'),
@@ -97,6 +89,7 @@ class pagesController extends Controller
            $game->background = 'background:#fff;'; 
           else 
            $game->background = 'background:#dcdcdc;';
+           $game->date = Carbon::parse($game->date)->format('d.m.Y'); 
       }
         $avgFor = round($goalFor/$games->count(), 2);
         $avgAway = round($goalAway/$games->count(), 2);
@@ -141,6 +134,9 @@ class pagesController extends Controller
       $find = isset($input['find']) ? $input['find'] : '';
       $count = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->count();
       $tours = Tours::where([['tour_user_id', $userId],['name_tour', 'like', '%'.$find.'%']])->orderByDesc('date')->paginate(50);
+      foreach ($tours as $tour){
+        $tour->date = Carbon::parse($tour->date)->format('d.m.Y'); 
+      }
       return view('setting.settingTour', compact('tours','find','count'));
     }
 
@@ -150,6 +146,9 @@ class pagesController extends Controller
       $find = isset($input['find']) ? $input['find'] : '';
       $count = Tours::where('tour_user_id', $userId)->where('name_tour','like','%'.$find.'%' )->count();
       $tours = Tours::where('tour_user_id', $userId)->where('name_tour','like','%'.$find.'%' )->orderByDesc('date')->paginate(50);
+      foreach ($tours as $tour){
+        $tour->date = Carbon::parse($tour->date)->format('d.m.Y'); 
+      }
       return view('insertExistTour', compact('tours','find','count'));
     }
 
@@ -198,6 +197,9 @@ class pagesController extends Controller
       } 
       $avgFor = round($goalFor/$games->count(), 2);
       $avgAway = round($goalAway/$games->count(), 2);
+ 
+      $tour->date = Carbon::parse($tour->date)->format('d.m.Y'); 
+      
       return view('stats.oneTour', compact('games','tour','wins','tie','lose','goalFor','goalAway','avgFor','avgAway'));
      }
     }
