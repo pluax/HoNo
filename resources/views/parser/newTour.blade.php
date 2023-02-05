@@ -35,6 +35,7 @@
 @csrf
 <div class=container>
     <div class=row>
+      <h4>Ссылка на "Расписание и результаты" формата https://th.sportscorpion.com/rus/tournament/stage/[число]/matches/ </h4>
         <div class=col-md-10>
 <input name=link class=form-control value='{{ isset($find) ? $find : "" }}'>
 <input name=tourId hidden value='{{ $tour->id }}' > 

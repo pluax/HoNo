@@ -1,6 +1,55 @@
 @extends('sections.head')
 
 @section('content')
+<h1>Информация об аккаунте </h1>
+<table class="table table-bordered menu table-striped" style='margin-top: 20px;'>
+  <thead>
+    <tr>
+      <th scope="col">Всего игр</th>
+      <th scope="col">W (ОТ)</th>
+      <th scope="col">T</th>
+      <th scope="col">L (ОТ)</th>   
+      <th scope="col">Забито</th>
+      <th scope="col">Прпущено</th>
+      <th scope="col">Часов</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+<tr>
+    <td>
+    {{ $info['games'] }}
+    </td>
+    
+    <td>
+    {{ $info['wins'] }} ({{ $info['winsOT'] }}) 
+    </td>
+
+    <td>
+    {{ $info['tie'] }}
+    </td>
+
+    <td>
+    {{ $info['lose'] }} ({{ $info['loseOT'] }}) 
+    </td>
+
+    <td>
+    {{ $info['goalFor'] }}
+    </td>
+
+    <td>
+    {{ $info['goalAway'] }}
+    </td>
+
+    <td>
+    {{ $info['hours'] }}
+    </td>
+</tr>
+
+</tbody>
+</table>
+<hr>
+
 <h1>Редактирование аккаунта </h1>
 <span class='success'> {{ isset($massageUpdate) ? $massageUpdate : "" }}  </span>
 <form method='post' action='/update/user' >

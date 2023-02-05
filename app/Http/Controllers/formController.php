@@ -341,5 +341,62 @@ class formController extends Controller
           }
 
 
+            public function parserGamePlayoff(Request $request){
+                $userId = Auth::id(); 
+                $input = $request->all();
+                $max=$input['count'];
+                $saveId = 0;
+                $idPlayer = 0;
+                for ($i=1; $i<=$max; $i++) {
+    
+                    if (isset($input['insert'.$i]))  {
+                        if ($input['insert'.$i]=='yes') { 
+    
+                    if (isset($input['CheckPlayer'.$i]))  {
+                        if ($input['CheckPlayer'.$i]=='yes') { 
+                            //??
+                            $players = Players::create([
+                                'name_player' => $input['name'.$i],
+                                'family_player' => $input['fam'.$i],
+                                'city' => $input['city'.$i],
+                                'plaer_from_id' => $userId
+                            ]);
+                            $idPlayer = $players->id;
+                            $saveId = $idPlayer;
+                            echo 'есть'.$i.'-'.$idPlayer.'<br>'; 
+                               }  
+                            } else {
+                             if ($input['status'.$i]<>'notNew')  {           
+                             echo 'нет'.$i.'-'.$idPlayer.'<br>';                              
+                             $idPlayer = $input['idPlayer'.$i]; 
+                             } else { 
+                                echo 'подтягиваем<br>';
+                             }
+                            }
+                              
+                            
+
+                            if ($input['user_score'.$i]>$input['player_score'.$i]) $result=2; 
+                            if ($input['user_score'.$i]==$input['player_score'.$i]) $result=1;
+                            if ($input['user_score'.$i]<$input['player_score'.$i]) $result=0; 
+    
+                            $type = $input['type'.$i];
+    
+    
+                         
+                            Games::create([
+                                'tour_id' => $input['tourid'], 'user_id' => $userId, 'player_id' => $idPlayer, 'goal_for' => $input['user_score'.$i],
+                                'goal_away' =>  $input['player_score'.$i], 'result' => $result, 'type' => $type, 'user_id' => $userId,                 
+                            ]);
+    
+                        }
+                    }
+                           
+                   
+                }
+                        return redirect('/tours');
+
+            }
+
     }
 

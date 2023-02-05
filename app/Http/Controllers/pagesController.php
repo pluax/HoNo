@@ -243,12 +243,22 @@ class pagesController extends Controller
     }
       
       public function info(){
-       
+        $userId = Auth::id();
         
         $nameFamily = explode(' ',Auth::user()->name);
         $name = $nameFamily[0];
         $family = $nameFamily[1];
-        return view('setting.infoAboutUser', compact('name','family'));
+        $info['goalFor'] = Games::where('user_id',$userId)->sum('goal_for');
+        $info['goalAway'] = Games::where('user_id',$userId)->sum('goal_away');
+        $info['games'] =Games::where('user_id',$userId)->count();
+        $info['wins'] = Games::where('user_id',$userId)->where('result','2')->get()->count();
+        $info['tie'] = Games::where('user_id',$userId)->where('result','1')->get()->count();
+        $info['lose'] = Games::where('user_id',$userId)->where('result','0')->get()->count();
+        $info['winsOT'] = Games::where('user_id',$userId)->where('result','2')->where('type','o')->get()->count();
+        $info['loseOT'] = Games::where('user_id',$userId)->where('result','0')->where('type','o')->get()->count();
+        $info['hours'] = round($info['games']/12,2);
+        //$goalAway 
+        return view('setting.infoAboutUser', compact('name','family','info'));
       }
 
   

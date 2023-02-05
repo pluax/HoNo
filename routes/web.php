@@ -36,8 +36,8 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/insert/select/tour', [pagesController::class, 'toursEditGames']);
     Route::post('/insert/select/tour', [pagesController::class, 'toursEditGames']);
     Route::get('/info', [pagesController::class, 'info']);
-
-
+    Route::get('/insert/parser/po', [parserController::class, 'parserPo']);
+    Route::post('/insert/parser/playoff', [formController::class, 'parserGamePlayoff']);
     Route::post('/edit/tour', [pagesController::class, 'editOneTour']);
     Route::post('/tour/update', [pagesController::class, 'updateTour']);
     Route::post('/update/onegame/{id}', [formController::class, 'updateOneGame']);
