@@ -295,6 +295,7 @@ class formController extends Controller
 
         public function updateUser(Request $request){
             $input = $request->all();
+            $userId = Auth::id();
             $allName = $input['name'].' '.$input['family'];
             $email = $input['email'];
             User::where('id', Auth::id())
@@ -302,17 +303,27 @@ class formController extends Controller
                       ['email' => $email]
                 );
 
+                $info['goalFor'] = Games::where('user_id',$userId)->sum('goal_for');
+                $info['goalAway'] = Games::where('user_id',$userId)->sum('goal_away');
+                $info['games'] =Games::where('user_id',$userId)->count();
+                $info['wins'] = Games::where('user_id',$userId)->where('result','2')->get()->count();
+                $info['tie'] = Games::where('user_id',$userId)->where('result','1')->get()->count();
+                $info['lose'] = Games::where('user_id',$userId)->where('result','0')->get()->count();
+                $info['winsOT'] = Games::where('user_id',$userId)->where('result','2')->where('type','o')->get()->count();
+                $info['loseOT'] = Games::where('user_id',$userId)->where('result','0')->where('type','o')->get()->count();
+                $info['hours'] = round($info['games']/12,2);
+
                 $nameFamily = explode(' ', $allName);
                 $name = $nameFamily[0];
                 $family = $nameFamily[1];
                 $massageUpdate = 'Данные успешно обновлены';
-                return view('setting.infoAboutUser', compact('massageUpdate','name','family'));
+                return view('setting.infoAboutUser', compact('massageUpdate','name','family','info'));
             
           }
 
 
           public function updatePassword(Request $request){
-            
+            $userId = Auth::id();
             $input = $request->all();
             $userId = Auth::id(); 
             $nameFamily = explode(' ',Auth::user()->name);
@@ -320,6 +331,15 @@ class formController extends Controller
             $family = $nameFamily[1];
             $oldPass = User::where('id',$userId)->first();
             $oldPass = $oldPass->password;
+            $info['goalFor'] = Games::where('user_id',$userId)->sum('goal_for');
+            $info['goalAway'] = Games::where('user_id',$userId)->sum('goal_away');
+            $info['games'] =Games::where('user_id',$userId)->count();
+            $info['wins'] = Games::where('user_id',$userId)->where('result','2')->get()->count();
+            $info['tie'] = Games::where('user_id',$userId)->where('result','1')->get()->count();
+            $info['lose'] = Games::where('user_id',$userId)->where('result','0')->get()->count();
+            $info['winsOT'] = Games::where('user_id',$userId)->where('result','2')->where('type','o')->get()->count();
+            $info['loseOT'] = Games::where('user_id',$userId)->where('result','0')->where('type','o')->get()->count();
+            $info['hours'] = round($info['games']/12,2);
             if (Hash::check($input['oldPassword'], $oldPass)) {
              
                     if (strlen($input['newPassword']) <= 8) {
@@ -337,7 +357,7 @@ class formController extends Controller
                 $massage = 'Пароль неверный! ';
                 $classCSS = 'error';
                 }
-            return view('setting.infoAboutUser', compact('massage','name','family', 'classCSS'));
+            return view('setting.infoAboutUser', compact('massage','name','family', 'classCSS','info'));
           }
 
 
