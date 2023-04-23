@@ -383,15 +383,13 @@ class formController extends Controller
                             ]);
                             $idPlayer = $players->id;
                             $saveId = $idPlayer;
-                            echo 'есть'.$i.'-'.$idPlayer.'<br>'; 
+                           
                                }  
                             } else {
                              if ($input['status'.$i]<>'notNew')  {           
                              echo 'нет'.$i.'-'.$idPlayer.'<br>';                              
                              $idPlayer = $input['idPlayer'.$i]; 
-                             } else { 
-                                echo 'подтягиваем<br>';
-                             }
+                             } 
                             }
                               
                             
@@ -419,4 +417,3 @@ class formController extends Controller
             }
 
     }
-
